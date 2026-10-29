@@ -1,0 +1,4 @@
+-r requirements.txt
+pytest==9.1.1
+# Only needed for tests/e2e (browser check):
+playwright
