@@ -1,0 +1,21 @@
+[Unit]
+Description=ARNET AI
+After=network.target
+
+[Service]
+User=arnet
+Group=arnet
+WorkingDirectory=/opt/arnet-ai
+EnvironmentFile=/opt/arnet-ai/.env
+# One worker only: the rate limiter keeps its counters in memory.
+ExecStart=/opt/arnet-ai/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 1 --proxy-headers
+Restart=on-failure
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/arnet-ai/data
+
+[Install]
+WantedBy=multi-user.target
