@@ -1,0 +1,21 @@
+# Only for polling mode (no public HTTPS domain). With a domain, use the webhook instead and do not install this.
+[Unit]
+Description=ARNET AI Telegram bot (polling)
+After=network.target arnet.service
+
+[Service]
+User=arnet
+Group=arnet
+WorkingDirectory=/opt/arnet-ai
+EnvironmentFile=/opt/arnet-ai/.env
+ExecStart=/opt/arnet-ai/.venv/bin/python -m app.cli telegram-poll
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/opt/arnet-ai/data
+
+[Install]
+WantedBy=multi-user.target
